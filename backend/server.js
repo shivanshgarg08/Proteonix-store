@@ -201,9 +201,9 @@ app.post('/api/order', authOptional, async (req, res) => {
 
   try {
     const notifyResult = await sendOrderNotification(orderPayload);
-    notificationSent = Boolean(notifyResult?.messages?.[0]?.id);
+    notificationSent = Boolean(notifyResult?.messageId);
     if (notificationSent) {
-      console.log('WhatsApp notification sent:', notifyResult.messages[0].id);
+      console.log(`${notifyResult.channel} notification sent:`, notifyResult.messageId);
     }
   } catch (error) {
     notificationError = error.message;
