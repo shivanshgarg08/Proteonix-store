@@ -15,6 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const memoryOrders = [];
 const memoryUsers = [];
+let dbInitPromise = null;
 
 app.use(cors());
 app.use(express.json());
@@ -26,6 +27,10 @@ const connectDB = async () => {
     return;
   }
 
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
   try {
     await mongoose.connect(uri);
     console.log('MongoDB connected');
@@ -33,6 +38,26 @@ const connectDB = async () => {
     console.error('MongoDB connection failed:', error.message);
   }
 };
+
+const ensureDBConnected = async () => {
+  if (!dbInitPromise) {
+    dbInitPromise = connectDB().catch((error) => {
+      dbInitPromise = null;
+      throw error;
+    });
+  }
+
+  return dbInitPromise;
+};
+
+app.use(async (req, res, next) => {
+  try {
+    await ensureDBConnected();
+  } catch (error) {
+    console.error('DB init middleware failed:', error.message);
+  }
+  next();
+});
 
 const getJwtSecret = () => process.env.JWT_SECRET || 'proteonix-demo-secret';
 
@@ -78,6 +103,10 @@ const createToken = (user) =>
   jwt.sign({ id: user._id, name: user.name, contact: user.contact }, getJwtSecret(), {
     expiresIn: '7d'
   });
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
 
 app.post('/api/auth/register', async (req, res) => {
   const { name, contact, password } = req.body;
@@ -188,8 +217,12 @@ app.post('/api/order', authOptional, async (req, res) => {
   });
 });
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+if (require.main === module) {
+  ensureDBConnected().then(() => {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   });
-});
+}
+
+module.exports = app;
