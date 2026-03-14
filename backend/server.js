@@ -201,9 +201,15 @@ app.post('/api/order', authOptional, async (req, res) => {
 
   try {
     const notifyResult = await sendOrderNotification(orderPayload);
-    notificationSent = Boolean(notifyResult?.messageId);
-    if (notificationSent) {
-      console.log(`${notifyResult.channel} notification sent:`, notifyResult.messageId);
+    if (!notifyResult) {
+      notificationError = 'No notification provider configured.';
+    } else {
+      notificationSent = Boolean(notifyResult.messageId);
+      if (notificationSent) {
+        console.log(`${notifyResult.channel} notification sent:`, notifyResult.messageId);
+      } else {
+        notificationError = `${notifyResult.channel} notification did not return a message id.`;
+      }
     }
   } catch (error) {
     notificationError = error.message;

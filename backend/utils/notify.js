@@ -1,4 +1,23 @@
 const normalizePhone = (value) => String(value || '').replace(/\D/g, '');
+const normalizeEnvString = (value) => {
+  const normalized = String(value || '').trim();
+  return normalized.length > 0 ? normalized : null;
+};
+
+const normalizeTelegramToken = (value) => {
+  const token = normalizeEnvString(value);
+  if (!token) {
+    return null;
+  }
+
+  // Accept raw token, bot-prefixed token, or full API URL pasted by mistake.
+  if (token.includes('api.telegram.org/bot')) {
+    const match = token.match(/api\.telegram\.org\/bot([^/]+)/);
+    return match?.[1] || null;
+  }
+
+  return token.startsWith('bot') ? token.slice(3) : token;
+};
 
 const buildOrderMessage = (order) => {
   const orderLines = (order.products || [])
@@ -18,26 +37,28 @@ const buildOrderMessage = (order) => {
 };
 
 const sendTelegramNotification = async (message) => {
-  const { TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID } = process.env;
-  if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+  const token = normalizeTelegramToken(process.env.TELEGRAM_BOT_TOKEN);
+  const chatId = normalizeEnvString(process.env.TELEGRAM_CHAT_ID);
+
+  if (!token || !chatId) {
     return null;
   }
 
-  const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      chat_id: TELEGRAM_CHAT_ID,
+      chat_id: chatId,
       text: message
     })
   });
 
   if (!response.ok) {
     const details = await response.text();
-    throw new Error(`Telegram API failed: ${details}`);
+    throw new Error(`Telegram API failed (${response.status}): ${details}`);
   }
 
   const payload = await response.json();
@@ -52,27 +73,28 @@ const sendTelegramNotification = async (message) => {
 };
 
 const sendWhatsAppNotification = async (order, message) => {
-  const { WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_NUMBER, WHATSAPP_API_VERSION } =
-    process.env;
+  const accessToken = normalizeEnvString(process.env.WHATSAPP_ACCESS_TOKEN);
+  const phoneId = normalizeEnvString(process.env.WHATSAPP_PHONE_ID);
+  const fallbackNumber = normalizeEnvString(process.env.WHATSAPP_NUMBER);
+  const apiVersion = normalizeEnvString(process.env.WHATSAPP_API_VERSION) || 'v20.0';
 
-  if (!WHATSAPP_ACCESS_TOKEN || !WHATSAPP_PHONE_ID) {
+  if (!accessToken || !phoneId) {
     return null;
   }
 
   // Send to the checkout phone first; fallback to configured number for safety.
-  const recipient = normalizePhone(order.phone) || normalizePhone(WHATSAPP_NUMBER);
+  const recipient = normalizePhone(order.phone) || normalizePhone(fallbackNumber);
   if (!recipient) {
     console.warn('WhatsApp recipient not available. Skipping order notification.');
     return null;
   }
 
-  const apiVersion = WHATSAPP_API_VERSION || 'v20.0';
-  const url = `https://graph.facebook.com/${apiVersion}/${WHATSAPP_PHONE_ID}/messages`;
+  const url = `https://graph.facebook.com/${apiVersion}/${phoneId}/messages`;
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -88,7 +110,7 @@ const sendWhatsAppNotification = async (order, message) => {
 
   if (!response.ok) {
     const details = await response.text();
-    throw new Error(`WhatsApp API failed: ${details}`);
+    throw new Error(`WhatsApp API failed (${response.status}): ${details}`);
   }
 
   const payload = await response.json();
