@@ -1,13 +1,18 @@
-const sendOrderNotification = async (order) => {
-  const {
-    WHATSAPP_ACCESS_TOKEN,
-    WHATSAPP_PHONE_ID,
-    WHATSAPP_NUMBER,
-    WHATSAPP_API_VERSION
-  } = process.env;
+const normalizePhone = (value) => String(value || '').replace(/\D/g, '');
 
-  if (!WHATSAPP_ACCESS_TOKEN || !WHATSAPP_PHONE_ID || !WHATSAPP_NUMBER) {
-    console.warn('WhatsApp API not configured. Skipping order notification.');
+const sendOrderNotification = async (order) => {
+  const { WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_ID, WHATSAPP_NUMBER, WHATSAPP_API_VERSION } =
+    process.env;
+
+  if (!WHATSAPP_ACCESS_TOKEN || !WHATSAPP_PHONE_ID) {
+    console.warn('WhatsApp API not configured. Missing token or phone number id.');
+    return;
+  }
+
+  // Send to the checkout phone first; fallback to configured number for safety.
+  const recipient = normalizePhone(order.phone) || normalizePhone(WHATSAPP_NUMBER);
+  if (!recipient) {
+    console.warn('WhatsApp recipient not available. Skipping order notification.');
     return;
   }
 
@@ -37,7 +42,7 @@ const sendOrderNotification = async (order) => {
     },
     body: JSON.stringify({
       messaging_product: 'whatsapp',
-      to: WHATSAPP_NUMBER,
+      to: recipient,
       type: 'text',
       text: {
         preview_url: false,
@@ -50,6 +55,9 @@ const sendOrderNotification = async (order) => {
     const details = await response.text();
     throw new Error(`WhatsApp API failed: ${details}`);
   }
+
+  const payload = await response.json();
+  return payload;
 };
 
 module.exports = { sendOrderNotification };

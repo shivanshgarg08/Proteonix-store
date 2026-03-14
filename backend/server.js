@@ -167,13 +167,25 @@ app.post('/api/order', authOptional, async (req, res) => {
     memoryOrders.push(orderPayload);
   }
 
+  let notificationSent = false;
+  let notificationError = null;
+
   try {
-    await sendOrderNotification(orderPayload);
+    const notifyResult = await sendOrderNotification(orderPayload);
+    notificationSent = Boolean(notifyResult?.messages?.[0]?.id);
+    if (notificationSent) {
+      console.log('WhatsApp notification sent:', notifyResult.messages[0].id);
+    }
   } catch (error) {
+    notificationError = error.message;
     console.error('Notification failed:', error.message);
   }
 
-  return res.status(201).json({ message: 'Order placed successfully.' });
+  return res.status(201).json({
+    message: 'Order placed successfully.',
+    notificationSent,
+    notificationError
+  });
 });
 
 connectDB().then(() => {
