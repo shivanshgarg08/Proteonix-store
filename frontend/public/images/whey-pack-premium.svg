@@ -1,0 +1,15 @@
+<svg width="320" height="420" viewBox="0 0 320 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="64" y="36" width="192" height="36" rx="12" fill="#1a2226"/>
+  <rect x="48" y="68" width="224" height="300" rx="40" fill="#0d1416" stroke="#1f2d31" stroke-width="3"/>
+  <rect x="70" y="108" width="180" height="170" rx="24" fill="#0f1f26"/>
+  <rect x="70" y="108" width="180" height="60" rx="24" fill="#162a36"/>
+  <text x="84" y="144" fill="#e8f2ff" font-size="16" font-family="Arial" font-weight="700">PROTEONIX</text>
+  <text x="84" y="170" fill="#9ec7ff" font-size="12" font-family="Arial" font-weight="700">WHEY + MANDWA</text>
+  <rect x="88" y="188" width="144" height="42" rx="12" fill="#0f3553"/>
+  <text x="102" y="214" fill="#e8f2ff" font-size="14" font-family="Arial" font-weight="700">WHEY PROTEIN</text>
+  <circle cx="110" cy="252" r="10" fill="#f1b24a"/>
+  <circle cx="128" cy="248" r="8" fill="#f1b24a"/>
+  <circle cx="146" cy="252" r="9" fill="#f1b24a"/>
+  <circle cx="160" cy="296" r="34" fill="#145a8a" opacity="0.5"/>
+  <path d="M134 298c12-12 36-12 48 0" stroke="#9ec7ff" stroke-width="3" stroke-linecap="round"/>
+</svg>

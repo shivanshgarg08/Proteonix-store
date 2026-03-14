@@ -1,0 +1,9 @@
+<svg width="360" height="420" viewBox="0 0 360 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="90" y="40" width="180" height="42" rx="12" fill="#1a2a28"/>
+  <rect x="80" y="70" width="200" height="300" rx="40" fill="#0f1716" stroke="#1f2f2d" stroke-width="3"/>
+  <rect x="110" y="120" width="140" height="200" rx="24" fill="#121f1d"/>
+  <rect x="110" y="120" width="140" height="80" rx="24" fill="#17312b"/>
+  <text x="128" y="170" fill="#e8f5f0" font-size="20" font-family="Arial">PROTEONIX</text>
+  <text x="130" y="205" fill="#9fe3c2" font-size="12" font-family="Arial">STANDARD</text>
+  <circle cx="180" cy="310" r="38" fill="#16c172" opacity="0.35"/>
+</svg>

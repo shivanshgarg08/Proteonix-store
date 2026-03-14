@@ -1,0 +1,8 @@
+<svg width="240" height="300" viewBox="0 0 240 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="50" y="30" width="140" height="32" rx="10" fill="#1a2a28"/>
+  <rect x="40" y="55" width="160" height="210" rx="32" fill="#0f1716" stroke="#203431" stroke-width="2"/>
+  <rect x="60" y="90" width="120" height="120" rx="20" fill="#14312c"/>
+  <text x="76" y="140" fill="#e8f5f0" font-size="14" font-family="Arial">WHEY +</text>
+  <text x="76" y="160" fill="#9fe3c2" font-size="12" font-family="Arial">MANDWA</text>
+  <circle cx="120" cy="215" r="26" fill="#16c172" opacity="0.35"/>
+</svg>

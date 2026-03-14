@@ -1,0 +1,13 @@
+<svg width="320" height="420" viewBox="0 0 320 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="64" y="36" width="192" height="36" rx="12" fill="#1a1f24"/>
+  <rect x="48" y="68" width="224" height="300" rx="40" fill="#0e1215" stroke="#222733" stroke-width="3"/>
+  <rect x="70" y="108" width="180" height="170" rx="24" fill="#171224"/>
+  <rect x="70" y="108" width="180" height="60" rx="24" fill="#201836"/>
+  <text x="84" y="144" fill="#f0e8ff" font-size="16" font-family="Arial" font-weight="700">PROTEONIX</text>
+  <text x="84" y="170" fill="#d0b7ff" font-size="12" font-family="Arial" font-weight="700">ALMOND + RAJMA</text>
+  <rect x="88" y="188" width="144" height="42" rx="12" fill="#3b1f66"/>
+  <text x="100" y="214" fill="#f0e8ff" font-size="14" font-family="Arial" font-weight="700">PLANT PROTEIN</text>
+  <path d="M104 252c10-8 18-10 28-6" stroke="#f1b24a" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="160" cy="296" r="34" fill="#7a4db0" opacity="0.45"/>
+  <path d="M148 300c8-10 22-12 34-4" stroke="#d0b7ff" stroke-width="3" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="1600" height="700" viewBox="0 0 1600 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="farmSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#264d45"/>
+      <stop offset="1" stop-color="#17362f"/>
+    </linearGradient>
+    <linearGradient id="field1" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#5b8c58"/>
+      <stop offset="1" stop-color="#8bb06d"/>
+    </linearGradient>
+    <linearGradient id="field2" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#4a744a"/>
+      <stop offset="1" stop-color="#6b9d63"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="700" fill="url(#farmSky)"/>
+  <path d="M0 240L170 180L340 240L530 170L720 250L900 170L1100 250L1290 170L1600 270V700H0V240Z" fill="#35594e"/>
+  <path d="M0 380C180 340 300 340 470 380C650 425 760 420 960 380C1180 330 1330 340 1600 390V700H0V380Z" fill="url(#field1)"/>
+  <path d="M0 460C230 420 380 430 600 470C800 510 980 510 1210 470C1370 440 1480 440 1600 470V700H0V460Z" fill="url(#field2)"/>
+  <path d="M0 550C200 520 360 520 560 555C760 590 980 590 1210 550C1380 520 1480 520 1600 550V700H0V550Z" fill="#3f6a45"/>
+  <circle cx="1260" cy="140" r="70" fill="#f5c779" fill-opacity="0.8"/>
+</svg>

@@ -1,0 +1,10 @@
+<svg width="240" height="300" viewBox="0 0 240 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="48" y="24" width="144" height="30" rx="10" fill="#1a2624"/>
+  <rect x="36" y="50" width="168" height="220" rx="32" fill="#0f1716" stroke="#1e2f2d" stroke-width="3"/>
+  <rect x="56" y="84" width="128" height="120" rx="22" fill="#13231f"/>
+  <rect x="56" y="84" width="128" height="56" rx="22" fill="#1a2f26"/>
+  <text x="64" y="126" fill="#e8f5f0" font-size="13" font-family="Arial" font-weight="700">ALMOND</text>
+  <text x="64" y="148" fill="#9fe3c2" font-size="12" font-family="Arial" font-weight="700">+ RAJMA</text>
+  <circle cx="120" cy="226" r="30" fill="#f1b24a" opacity="0.35"/>
+  <path d="M120 214c10 6 14 16 10 26" stroke="#f2c37a" stroke-width="3" stroke-linecap="round"/>
+</svg>
